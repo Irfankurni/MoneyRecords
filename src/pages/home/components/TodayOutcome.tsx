@@ -1,4 +1,4 @@
-import { Pressable, StyleSheet, Text, View } from 'react-native'
+import { Dimensions, Pressable, StyleSheet, Text, View } from 'react-native'
 import React from 'react'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 import { mainStyle } from '../../../styles/styles'
@@ -17,8 +17,8 @@ const TodayOutcome = (props: Props) => {
                 Pengeluaran Hari Ini
             </Text>
             <View style={styles.outcomeContainer}>
-                <Text style={{ fontSize: 30 }}>{props.todayOutcome}</Text>
-                <Text style={{ fontSize: 14 }}>+{props.outcomeComparisan}% dibanding kemarin</Text>
+                <Text style={[mainStyle.title, { fontSize: 30, color: '#F2F2F2' }]}>{props.todayOutcome}</Text>
+                <Text style={[mainStyle.subTitle, { fontSize: 14, color: '#F2F2F2' }]}>+{props.outcomeComparisan}% dibanding kemarin</Text>
                 <Pressable
                     style={styles.detailContainer}
                     onPress={() => console.log('Details')}>
@@ -41,19 +41,19 @@ const styles = StyleSheet.create({
     outcomeContainer: {
         marginTop: 12,
         backgroundColor: "#767AE7",
-        width: 338,
+        width: Dimensions.get("window").width - 48,
         height: 167,
         borderRadius: 14,
         padding: 22
     },
     detailContainer: {
-        width: 316,
+        width: 290,
         height: 33,
         marginTop: 20,
         paddingEnd: 20,
         backgroundColor: "#FFFFFF",
-        borderTopStartRadius: 14,
-        borderBottomEndRadius: 8,
+        borderTopStartRadius: 50,
+        borderBottomEndRadius: 18,
         alignItems: "center",
         justifyContent: "flex-end",
         flexDirection: "row",

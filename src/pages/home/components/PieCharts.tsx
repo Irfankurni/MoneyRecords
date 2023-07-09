@@ -20,7 +20,7 @@ const PieCharts = (props: Props) => {
     ]
 
     return (
-        <View style={{ marginTop: 56, flexDirection: 'row' }}>
+        <View style={{ marginVertical: 26, flexDirection: 'row' }}>
             <View>
                 <Text style={mainStyle.title}>
                     Perbandingan Bulan Ini

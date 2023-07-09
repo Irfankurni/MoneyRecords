@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View } from 'react-native'
+import { Dimensions, StyleSheet, Text, View } from 'react-native'
 import React from 'react'
 import { LineChart } from 'react-native-chart-kit'
 import { mainStyle } from '../../../styles/styles'
@@ -6,35 +6,37 @@ import { mainStyle } from '../../../styles/styles'
 type Props = {}
 
 const LineCharts = (props: Props) => {
+    const numberFormat = (value: number) => {
+        return new Intl.NumberFormat('id-ID').format(value);
+    }
+
     return (
         <View>
             <Text style={mainStyle.title}>Pengeluaran Minggu Ini</Text>
             <LineChart
                 data={{
-                    labels: ["Jan", "Feb", "March", "April", "May", "June"],
+                    labels: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
                     datasets: [
                         {
                             data: [
-                                Math.random() * 100,
-                                Math.random() * 100,
-                                Math.random() * 100,
-                                Math.random() * 100,
-                                Math.random() * 100,
-                                Math.random() * 100
+                                50000,
+                                60000,
+                                120000,
+                                28000,
+                                98000,
+                                150000,
+                                150000
                             ]
                         }
                     ]
                 }}
-                width={340} // from react-native
+                width={Dimensions.get("window").width - 18} // from react-native
                 height={220}
-                yAxisLabel="$"
-                yAxisSuffix="k"
-                yAxisInterval={1} // optional, defaults to 1
+                formatYLabel={(value) => numberFormat(parseInt(value))}
                 chartConfig={styles.chartConfig}
                 bezier
                 style={{
-                    marginVertical: 8,
-                    borderRadius: 16
+                    marginTop: 8,
                 }}
             />
         </View>
@@ -51,11 +53,8 @@ const styles = StyleSheet.create({
         decimalPlaces: 2, // optional, defaults to 2dp
         color: (opacity = 0.5) => `rgba(118, 122, 231, ${opacity})`,
         labelColor: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
-        style: {
-            borderRadius: 16
-        },
         propsForLabels: {
-            fontFamily: 'Poppins-Regular'
+            fontFamily: 'Poppins-Regular',
         },
         propsForDots: {
             r: "6",

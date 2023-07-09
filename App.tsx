@@ -7,6 +7,8 @@ import { RootStackParamList } from './src/navigation/types';
 import { createStackNavigator } from '@react-navigation/stack';
 import HomeTab from './src/pages/home/HomeTab';
 import { PaperProvider } from 'react-native-paper';
+import LoginScreen from './src/pages/login/LoginScreen';
+import RegisterScreen from './src/pages/register/RegisterScreen';
 
 type Props = {}
 
@@ -24,6 +26,8 @@ const App = (props: Props) => {
             headerShown: false
           }}>
           <Stack.Screen name='Splash' component={SplashScreen} />
+          <Stack.Screen name='Login' component={LoginScreen} />
+          <Stack.Screen name='Register' component={RegisterScreen} />
           <Stack.Screen name='HomeTab' component={HomeTab} />
         </Stack.Navigator>
       </NavigationContainer>

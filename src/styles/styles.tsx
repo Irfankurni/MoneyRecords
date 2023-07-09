@@ -3,14 +3,13 @@ import { StyleSheet } from "react-native";
 export const mainStyle = StyleSheet.create({
     mainContainer: {
         flex: 1,
-        paddingVertical: 16,
-        paddingHorizontal: 28
+        paddingTop: 16,
+        paddingHorizontal: 24,
     },
     fab: {
         position: 'absolute',
-        margin: 16,
-        right: 0,
-        bottom: 0,
+        right: -8,
+        bottom: 16,
     },
     title: {
         fontSize: 20,
@@ -22,11 +21,30 @@ export const mainStyle = StyleSheet.create({
         fontFamily: 'Poppins-Regular',
     },
     profileImage: {
-        marginEnd: 16
+        marginEnd: 16,
     },
     profileName: {
         fontSize: 20,
         fontFamily: 'Poppins-Bold',
         fontWeight: 'bold'
+    },
+    input: {
+        width: 328,
+        borderRadius: 28,
+        backgroundColor: '#767AE7',
+        marginBottom: 16,
+        fontFamily: 'Poppins-Regular',
+        color: '#FFFFFF',
+        borderWidth: 0
+    },
+    button: {
+        backgroundColor: "#767AE7",
+        borderRadius: 28,
+        marginTop: 16,
+    },
+    buttonLabel: {
+        fontFamily: 'Poppins-SemiBold',
+        fontSize: 16,
+        color: '#F1F0F2',
     },
 })

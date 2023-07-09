@@ -7,6 +7,11 @@ import TodayOutcome from './components/TodayOutcome'
 type Props = {}
 
 const HomeScreen = (props: Props) => {
+    const numberFormat = (value: number) =>
+        new Intl.NumberFormat('id-ID', {
+            style: 'currency',
+            currency: 'IDR'
+        }).format(value);
 
     return (
         <View style={mainStyle.mainContainer}>
@@ -24,7 +29,7 @@ const HomeScreen = (props: Props) => {
                     </View>
                 </View>
                 <TodayOutcome
-                    todayOutcome={50000}
+                    todayOutcome={numberFormat(50000)}
                     outcomeComparisan={20}
                 />
             </ScrollView>

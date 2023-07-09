@@ -6,7 +6,7 @@ import LineCharts from './LineCharts'
 import PieCharts from './PieCharts'
 
 type Props = {
-    todayOutcome: number,
+    todayOutcome: string,
     outcomeComparisan: number
 }
 
@@ -17,7 +17,7 @@ const TodayOutcome = (props: Props) => {
                 Pengeluaran Hari Ini
             </Text>
             <View style={styles.outcomeContainer}>
-                <Text style={{ fontSize: 30 }}>Rp. {props.todayOutcome}</Text>
+                <Text style={{ fontSize: 30 }}>{props.todayOutcome}</Text>
                 <Text style={{ fontSize: 14 }}>+{props.outcomeComparisan}% dibanding kemarin</Text>
                 <Pressable
                     style={styles.detailContainer}

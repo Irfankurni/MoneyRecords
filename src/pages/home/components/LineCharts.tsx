@@ -1,13 +1,14 @@
 import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
 import { LineChart } from 'react-native-chart-kit'
+import { mainStyle } from '../../../styles/styles'
 
 type Props = {}
 
 const LineCharts = (props: Props) => {
     return (
         <View>
-            <Text style={{ fontSize: 18 }}>Pengeluaran Minggu Ini</Text>
+            <Text style={mainStyle.title}>Pengeluaran Minggu Ini</Text>
             <LineChart
                 data={{
                     labels: ["Jan", "Feb", "March", "April", "May", "June"],
@@ -45,13 +46,16 @@ export default LineCharts
 const styles = StyleSheet.create({
     chartConfig: {
         backgroundColor: "#F2F2F2",
-        backgroundGradientFrom: "#FFFFFF",
+        backgroundGradientFrom: "#F2F2F2",
         backgroundGradientTo: "#F2F2F2",
         decimalPlaces: 2, // optional, defaults to 2dp
         color: (opacity = 0.5) => `rgba(118, 122, 231, ${opacity})`,
         labelColor: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
         style: {
             borderRadius: 16
+        },
+        propsForLabels: {
+            fontFamily: 'Poppins-Regular'
         },
         propsForDots: {
             r: "6",

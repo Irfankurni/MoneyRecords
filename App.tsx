@@ -6,6 +6,7 @@ import { SplashScreen } from './src/pages/splash/SplashScreen';
 import { RootStackParamList } from './src/navigation/types';
 import { createStackNavigator } from '@react-navigation/stack';
 import HomeTab from './src/pages/home/HomeTab';
+import { PaperProvider } from 'react-native-paper';
 
 type Props = {}
 
@@ -14,17 +15,19 @@ const App = (props: Props) => {
   const Stack = createStackNavigator<RootStackParamList>();
 
   return (
-    <NavigationContainer>
-      <StatusBar barStyle="dark-content" backgroundColor="#F2F2F2"/>
-      <Stack.Navigator 
-        initialRouteName='Splash'
-        screenOptions={{
-          headerShown: false
-        }}>
-        <Stack.Screen name='Splash' component={SplashScreen}/>
-        <Stack.Screen name='HomeTab' component={HomeTab}/>
-      </Stack.Navigator>
-    </NavigationContainer>
+    <PaperProvider>
+      <NavigationContainer>
+        <StatusBar barStyle="dark-content" backgroundColor="#F2F2F2" />
+        <Stack.Navigator
+          initialRouteName='Splash'
+          screenOptions={{
+            headerShown: false
+          }}>
+          <Stack.Screen name='Splash' component={SplashScreen} />
+          <Stack.Screen name='HomeTab' component={HomeTab} />
+        </Stack.Navigator>
+      </NavigationContainer>
+    </PaperProvider>
   )
 }
 

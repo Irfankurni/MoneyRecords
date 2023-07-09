@@ -1,8 +1,6 @@
-import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { useEffect } from "react"
 import { Image, StyleSheet, View } from "react-native"
-import { HomeTabParamList, HomeTabScreenProps, RootStackParamList, RootStackScreenProps } from "../../navigation/types";
-import { useNavigation } from "@react-navigation/native";
+import { RootStackScreenProps } from "../../navigation/types";
 
 
 export const SplashScreen = ({navigation}: RootStackScreenProps<'Splash'>) => {

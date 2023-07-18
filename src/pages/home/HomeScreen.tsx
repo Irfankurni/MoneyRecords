@@ -1,21 +1,16 @@
 import React, { useEffect, useState } from 'react'
-import { ScrollView, StyleSheet, Text, View } from 'react-native'
+import { ScrollView, StatusBar, StyleSheet, Text, View } from 'react-native'
 import { Avatar, FAB, IconButton, Tooltip } from 'react-native-paper'
 import { mainStyle } from '../../styles/styles'
 import TodayOutcome from './components/TodayOutcome'
 import LoadingIndicator from '../../components/LoadingIndicator'
+import { HomeTabScreenProps } from '../../navigation/types'
+import { currencyFormat } from '../../function/currency-format'
 
 type Props = {}
 
-const HomeScreen = (props: Props) => {
+const HomeScreen = ({route}: HomeTabScreenProps<'Home'>) => {
     const [loading, setLloading] = useState(true);
-
-    const numberFormat = (value: number) => {
-        return new Intl.NumberFormat('id-ID', {
-            style: 'currency',
-            currency: 'IDR',
-        }).format(value);
-    }
 
     useEffect(() => {
         setTimeout(() => {
@@ -50,7 +45,7 @@ const HomeScreen = (props: Props) => {
                             </View>
                         </View>
                         <TodayOutcome
-                            todayOutcome={numberFormat(50000)}
+                            todayOutcome={currencyFormat(50000)}
                             outcomeComparisan={20} />
                     </ScrollView>
                     <FAB

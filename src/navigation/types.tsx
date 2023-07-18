@@ -10,6 +10,7 @@ export type RootStackParamList = {
     Login: undefined;
     Register: undefined;
     HomeTab: NavigatorScreenParams<HomeTabParamList>;
+    Detail: {id: string};
 };
 
 export type RootStackScreenProps<T extends keyof RootStackParamList> =

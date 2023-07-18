@@ -6,7 +6,7 @@ type Props = {}
 const HistoryScreen = (props: Props) => {
   return (
     <View>
-      <Text>HistoryScreen</Text>
+      <Text>Coming Soon</Text>
     </View>
   )
 }

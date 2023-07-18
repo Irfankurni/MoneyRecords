@@ -5,7 +5,7 @@ import Input from '../../components/Input'
 import { Button } from 'react-native-paper'
 import { RootStackScreenProps } from '../../navigation/types'
 
-const RegisterScreen = ({ navigation }: RootStackScreenProps<'Login'>) => {
+const RegisterScreen = ({ navigation }: RootStackScreenProps<'Register'>) => {
     const onChangeName = (text: string) => {
         console.log(text)
     }

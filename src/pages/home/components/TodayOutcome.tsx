@@ -44,16 +44,17 @@ const styles = StyleSheet.create({
         width: Dimensions.get("window").width - 48,
         height: 167,
         borderRadius: 14,
-        padding: 22
+        paddingVertical: 22,
+        paddingStart: 22
     },
     detailContainer: {
-        width: 290,
+        width: '100%',
         height: 33,
         marginTop: 20,
+        marginStart: 8,
         paddingEnd: 20,
         backgroundColor: "#FFFFFF",
-        borderTopStartRadius: 50,
-        borderBottomEndRadius: 18,
+        borderRadius: 12,
         alignItems: "center",
         justifyContent: "flex-end",
         flexDirection: "row",

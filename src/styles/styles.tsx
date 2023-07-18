@@ -5,6 +5,7 @@ export const mainStyle = StyleSheet.create({
         flex: 1,
         paddingTop: 16,
         paddingHorizontal: 24,
+        backgroundColor: '#F2F2F2'
     },
     fab: {
         position: 'absolute',

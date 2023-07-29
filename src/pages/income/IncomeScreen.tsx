@@ -3,7 +3,7 @@ import React, { useState } from 'react'
 import { mainStyle } from '../../styles/styles'
 import { HomeTabScreenProps } from '../../navigation/types'
 import CardInOut from '../../components/CardInOut'
-import { currencyFormat } from '../../function/currency-format'
+import { currencyFormat } from '../../common/currency-format'
 import { Button, Dialog, Text } from 'react-native-paper'
 
 type Props = {}

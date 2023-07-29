@@ -2,7 +2,7 @@ import { StyleSheet, View } from 'react-native'
 import React, { useState } from 'react'
 import { Dialog, Text, Button } from 'react-native-paper'
 import CardInOut from '../../components/CardInOut'
-import { currencyFormat } from '../../function/currency-format'
+import { currencyFormat } from '../../common/currency-format'
 import { mainStyle } from '../../styles/styles'
 import { HomeTabScreenProps } from '../../navigation/types'
 

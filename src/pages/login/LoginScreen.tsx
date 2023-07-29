@@ -1,27 +1,53 @@
 import { Image, Pressable, StyleSheet, Text, View } from 'react-native'
-import React from 'react'
+import React, { useState } from 'react'
 import { mainStyle } from '../../styles/styles'
 import Input from '../../components/Input'
 import { Button } from 'react-native-paper'
 import { RootStackScreenProps } from '../../navigation/types'
+import { loginPost, saveData } from '../../services/auth.service'
 
 
 const LoginScreen = ({ navigation }: RootStackScreenProps<'Login'>) => {
+    
+    const [loading, setLoading] = useState(false);
+    const [disabled, setDisabled] = useState(false);
+
+    const [body, setBody] = useState({
+        email: '',
+        password: '',
+    });
+
     const onChangeEmail = (text: string) => {
-        console.log(text);
+        setBody({...body, email: text});
     }
     const onChangePassword = (text: string) => {
-        console.log(text);
+        setBody({...body, password: text});
     }
+
     const navigateRegister = () => {
         navigation.navigate('Register');
     }
+
     const navigateHome = () => {
         navigation.replace('HomeTab', {
             screen: 'Home',
             params: undefined
         });
     }
+
+    const onSubmit = () => {
+        setLoading(true);
+        setDisabled(true);
+        loginPost(body).then(res => {
+            saveData(res);
+            navigateHome();
+        }).catch(error => {
+            setLoading(false);
+            setDisabled(false);
+        })
+    }
+
+
     return (
         <View style={[mainStyle.mainContainer, styles.container]}>
             <Image source={require('../../../assets/bg.png')} style={{ width: 110, height: 110, marginBottom: 77 }} />
@@ -36,12 +62,12 @@ const LoginScreen = ({ navigation }: RootStackScreenProps<'Login'>) => {
                     secureTextEntry={true} />
             </View>
             <Button mode="contained-tonal"
-                // loading={loading}
-                // disabled={disabled}
+                loading={loading}
+                disabled={disabled}
                 style={[mainStyle.button, { width: 150 }]}
                 contentStyle={{ padding: 8 }}
                 labelStyle={mainStyle.buttonLabel}
-                onPress={navigateHome}>
+                onPress={onSubmit}>
                 Login
             </Button>
             <View style={styles.footer}>

@@ -7,6 +7,7 @@ import IncomeScreen from '../income/IncomeScreen';
 import OutcomeScreen from '../outcome/OutcomeScreen';
 import ProfileScreen from '../profile/ProfileScreen';
 import HistoryScreen from '../history/HistoryScreen';
+import { StatusBar } from 'react-native';
 
 type Props = {}
 
@@ -16,8 +17,16 @@ const HomeTab = (props: Props) => {
     return (
         <HomeTabs.Navigator
             screenOptions={{
-                headerShown: false,
-                tabBarActiveTintColor: '#767AE7',
+                headerShown: true,
+                    headerStyle: {
+                        backgroundColor: '#767AE7',
+                      },
+                      headerTintColor: '#fff',
+                      headerTitleStyle: {
+                        fontWeight: 'bold',
+                        fontFamily: 'Poppins-Bold',
+                        marginStart: 8
+                      },
             }}
             initialRouteName='Home'>
             <HomeTabs.Screen
@@ -29,6 +38,8 @@ const HomeTab = (props: Props) => {
                             <Icons name='home' color={color} size={size} />
                         );
                     },
+                    headerShown: false,
+                    tabBarActiveTintColor: '#767AE7',
                 }}
             />
             <HomeTabs.Screen
@@ -59,18 +70,9 @@ const HomeTab = (props: Props) => {
                     tabBarIcon: ({ size, focused, color }) => {
                         return (
                             <Icons name='history' color={color} size={size} />
-                        );
+                        );  
                     },
-                }} />
-            <HomeTabs.Screen
-                name="Profile"
-                component={ProfileScreen}
-                options={{
-                    tabBarIcon: ({ size, focused, color }) => {
-                        return (
-                            <Icons name='person' color={color} size={size} />
-                        );
-                    },
+                    title: 'Coming soon'
                 }} />
         </HomeTabs.Navigator>
     )

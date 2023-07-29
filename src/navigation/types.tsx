@@ -7,7 +7,10 @@ import type { BottomTabScreenProps } from '@react-navigation/bottom-tabs';
 
 export type RootStackParamList = {
     Splash: undefined;
+    Login: undefined;
+    Register: undefined;
     HomeTab: NavigatorScreenParams<HomeTabParamList>;
+    Detail: {id: string};
 };
 
 export type RootStackScreenProps<T extends keyof RootStackParamList> =

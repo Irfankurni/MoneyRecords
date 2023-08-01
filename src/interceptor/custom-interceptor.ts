@@ -47,7 +47,7 @@ instance.interceptors.response.use(function (response) {
         }
     }
     if (error?.response?.status === 403) {
-        console.log('Masuk')
+        ToastAndroid.show(error.response.data.message, ToastAndroid.SHORT)
         RootNavigation.navigate('Login', {});
         return Promise.reject(error);
     }

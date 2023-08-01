@@ -59,7 +59,9 @@ const LoginScreen = ({ navigation }: RootStackScreenProps<'Login'>) => {
                 <Input
                     placeholder='Password'
                     onChangeText={onChangePassword}
-                    secureTextEntry={true} />
+                    secureTextEntry={true} 
+                    onSubmitEditing={onSubmit}
+                    />
             </View>
             <Button mode="contained-tonal"
                 loading={loading}

@@ -1,39 +1,37 @@
 import { Dimensions, StyleSheet, Text, View } from 'react-native'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { LineChart } from 'react-native-chart-kit'
 import { mainStyle } from '../../../styles/styles'
 
-type Props = {}
+type Props = {
+    data: any
+}
 
 const LineCharts = (props: Props) => {
     const numberFormat = (value: number) => {
         return new Intl.NumberFormat('id-ID').format(value);
     }
 
+    const data = {
+        labels: props.data.week.map((item: any) => item.day),
+        datasets: [
+            {
+                data: props.data.week.map((item: any) => item.total)
+            }
+        ]
+    };
+    
+
     return (
         <View>
             <Text style={mainStyle.title}>Pengeluaran Minggu Ini</Text>
             <LineChart
-                data={{
-                    labels: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
-                    datasets: [
-                        {
-                            data: [
-                                50000,
-                                60000,
-                                120000,
-                                28000,
-                                98000,
-                                150000,
-                                150000
-                            ]
-                        }
-                    ]
-                }}
+                data={data}
                 width={Dimensions.get("window").width - 18} // from react-native
                 height={220}
                 formatYLabel={(value) => numberFormat(parseInt(value))}
                 chartConfig={styles.chartConfig}
+                fromZero
                 bezier
                 style={{
                     marginTop: 8,

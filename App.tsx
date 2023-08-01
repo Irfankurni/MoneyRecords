@@ -10,6 +10,7 @@ import { PaperProvider } from 'react-native-paper';
 import LoginScreen from './src/pages/login/LoginScreen';
 import RegisterScreen from './src/pages/register/RegisterScreen';
 import DetailScreen from './src/pages/detail/DetailScreen';
+import { navigationRef } from './RootNavigation';
 
 type Props = {}
 
@@ -19,7 +20,7 @@ const App = (props: Props) => {
 
   return (
     <PaperProvider>
-      <NavigationContainer>
+      <NavigationContainer ref={navigationRef}>
         <StatusBar barStyle="dark-content" backgroundColor="#F2F2F2" />
         <Stack.Navigator
           initialRouteName='Splash'

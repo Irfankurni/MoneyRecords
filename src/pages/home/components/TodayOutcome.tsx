@@ -29,8 +29,6 @@ const TodayOutcome = (props: Props) => {
                 </Pressable>
             </View>
             <View style={styles.divider}></View>
-            <LineCharts />
-            <PieCharts />
         </View>
     )
 }

@@ -1,39 +1,56 @@
 import axios from 'axios'
 import * as RootNavigation from '../../RootNavigation'
 import { ToastAndroid } from 'react-native';
-import { getToken } from '../services/auth.service';
+import { clearData, getRefreshToken, getToken, refreshToken, saveData } from '../services/auth.service';
+import { BASE_URL } from '../common/base';
 
 const instance = axios.create();
-// Add a request interceptor
+
 instance.interceptors.request.use(async function (config) {
 
-    const token = await getToken()
-    config.headers.authorization = `Bearer ${token}`
+    if(config.url !== `${BASE_URL}/auth/authenticate`) {
+        const token = await getToken()
+        config.headers.authorization = `Bearer ${token}`
+    }
+
+    if(config.url === `${BASE_URL}/auth/refresh-token`) {
+        const refreshToken = await getRefreshToken()
+        config.headers.authorization = `Bearer ${refreshToken}`
+    }
+
 
     return config;
 }, function (error) {
-    // Do something with request error
+    console.log(error)
     return Promise.reject(error);
 });
 
-// Add a response interceptor
 instance.interceptors.response.use(function (response) {
-    // Any status code that lie within the range of 2xx cause this function to trigger
-    // Do something with response data
     if (response.data.message) {
         ToastAndroid.show(response.data.message, ToastAndroid.SHORT)
     }
     return response;
-}, function (error) {
-    // Any status codes that falls outside the range of 2xx cause this function to trigger
-    // Do something with response error
-    for (const message of error.response.data.message) {
-        ToastAndroid.show(message, ToastAndroid.SHORT)
+}, async (error) => {
+    const config = error?.config;
+
+    if (error?.response?.status === 401 && !config?.sent) {
+        config.sent = true;
+        try {
+            await refreshToken().then(res => {
+                clearData();
+                saveData(res);
+            })
+            return instance(config);
+        } catch (_error) {
+            RootNavigation.navigate('Login', {});
+            return Promise.reject(_error);
+        }
     }
-    if (error.response.status === 401) {
-        RootNavigation.navigate('Login', {})
+    if (error?.response?.status === 403) {
+        console.log('Masuk')
+        RootNavigation.navigate('Login', {});
+        return Promise.reject(error);
     }
-    return Promise.reject(error);
 });
 
 export default instance

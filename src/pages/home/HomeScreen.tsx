@@ -1,29 +1,63 @@
 import React, { useEffect, useState } from 'react'
-import { ScrollView, StatusBar, StyleSheet, Text, View } from 'react-native'
+import { RefreshControl, ScrollView, StatusBar, StyleSheet, Text, View } from 'react-native'
 import { Avatar, FAB, IconButton, Tooltip } from 'react-native-paper'
 import { mainStyle } from '../../styles/styles'
 import TodayOutcome from './components/TodayOutcome'
 import LoadingIndicator from '../../components/LoadingIndicator'
 import { HomeTabScreenProps } from '../../navigation/types'
 import { currencyFormat } from '../../common/currency-format'
-import { getData } from '../../services/auth.service'
+import { getData, getId } from '../../services/auth.service'
+import { getAnalysis } from '../../services/history.service'
+import LineCharts from './components/LineCharts'
+import PieCharts from './components/PieCharts'
 
 type Props = {}
 
-const HomeScreen = ({route}: HomeTabScreenProps<'Home'>) => {
-    const [loading, setLloading] = useState(true);
+const HomeScreen = ({ route }: HomeTabScreenProps<'Home'>) => {
+    const [loading, setLoading] = useState(true);
+    const [refresh, setRefresh] = useState(false)
     const [user, setUser] = useState({
         firstName: '',
         lastName: ''
     });
+    const [analysis, setAnalysis] = useState({
+        today: 0,
+        yesterday: 0,
+        week: [],
+        month: {
+            income: 0,
+            outcome: 0
+        }
+    })
 
     useEffect(() => {
         getData().then(data => setUser(data.data));
-        setTimeout(() => {
-            setLloading(false);
-        }, 1000);
-    }, [loading])
+        getDataAnalysis();
+    }, [])
 
+    useEffect(() => {
+        if (refresh) {
+            getDataAnalysis();
+        }
+    }, [refresh])
+
+    const getDataAnalysis = () => {
+        getAnalysis().then(data => {
+            setAnalysis(data)
+            setLoading(false);
+        })
+        setRefresh(false);
+    }
+
+    const onRefresh = () => {
+        setRefresh(true)
+    }
+
+    const comparison = () => {
+        const dividerToday = (analysis.today + analysis.yesterday) == 0 ? 1 : (analysis.today + analysis.yesterday)
+        const data = (Math.abs(analysis.today - analysis.yesterday)/ dividerToday) * 100;
+        return Math.floor(data);
+    }
 
     return (
         <View style={mainStyle.mainContainer}>
@@ -33,26 +67,31 @@ const HomeScreen = ({route}: HomeTabScreenProps<'Home'>) => {
                 </View>
                 :
                 <View>
-                    <ScrollView showsVerticalScrollIndicator={false}>
+                    <ScrollView
+                        showsVerticalScrollIndicator={false}
+                        refreshControl={<RefreshControl refreshing={refresh} onRefresh={onRefresh} />}
+                    >
                         <View>
                             <View style={styleSheet.profileContainer}>
                                 <View style={{ flexDirection: 'row' }}>
-                                    <Avatar.Image source={require('../../../assets/profile.png')} style={mainStyle.profileImage}/>
+                                    <Avatar.Image source={require('../../../assets/profile.png')} style={mainStyle.profileImage} />
                                     <Text style={mainStyle.profileName}>Hi, {user.firstName} {user.lastName}</Text>
                                 </View>
                                 <Tooltip title="Logout">
-                                    <IconButton 
-                                    icon='power' 
-                                    size={25} 
-                                    onPress={() => console.log('Logout')} 
-                                    iconColor='black'/>
+                                    <IconButton
+                                        icon='power'
+                                        size={25}
+                                        onPress={() => console.log('Logout')}
+                                        iconColor='black' />
                                 </Tooltip>
                                 {/* <Icon name='power-settings-new' size={25} /> */}
                             </View>
                         </View>
                         <TodayOutcome
-                            todayOutcome={currencyFormat(50000)}
-                            outcomeComparisan={20} />
+                            todayOutcome={currencyFormat(analysis.today)}
+                            outcomeComparisan={comparison()} />
+                        <LineCharts data={analysis} />
+                        <PieCharts data={analysis}/>
                     </ScrollView>
                     <FAB
                         icon="plus"

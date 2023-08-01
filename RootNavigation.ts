@@ -4,6 +4,14 @@ export const navigationRef = createNavigationContainerRef()
 
 export function navigate(name: any, params: any) {
     if (navigationRef.isReady()) {
-        navigationRef.navigate(name, params);
+        navigationRef.reset({
+            index: 0,
+            routes: [
+                {
+                    name,
+                    params
+                }
+            ]
+        });
     }
 }

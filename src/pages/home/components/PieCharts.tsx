@@ -3,18 +3,20 @@ import React from 'react'
 import { PieChart } from 'react-native-chart-kit'
 import { mainStyle } from '../../../styles/styles'
 
-type Props = {}
+type Props = {
+    data: any
+}
 
 const PieCharts = (props: Props) => {
     const pieData = [
         {
             name: "Income",
-            population: 2500000,
+            population: props.data.month.income,
             color: "#767AE7",
         },
         {
             name: "Outcome",
-            population: 5000000,
+            population: props.data.month.outcome,
             color: "#A3D8F4",
         }
     ]

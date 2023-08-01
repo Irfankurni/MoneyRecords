@@ -8,15 +8,17 @@ type Props = {
 }
 
 const PieCharts = (props: Props) => {
+    const income = props.data.month.income !== null ? props.data.month.income : 0;
+    const outcome = props.data.month.outcome !== null ? props.data.month.outcome : 0;
     const pieData = [
         {
             name: "Income",
-            population: props.data.month.income,
+            population: income ? income : 0,
             color: "#767AE7",
         },
         {
             name: "Outcome",
-            population: props.data.month.outcome,
+            population: outcome ? outcome : 0,
             color: "#A3D8F4",
         }
     ]

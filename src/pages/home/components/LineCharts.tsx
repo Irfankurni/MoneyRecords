@@ -12,11 +12,14 @@ const LineCharts = (props: Props) => {
         return new Intl.NumberFormat('id-ID').format(value);
     }
 
+    const label = props.data.week.size !== undefined ? props.data.week.map((item: any) => item.day): ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
+    const total = props.data.week.size !== undefined ? props.data.week.map((item: any) => item.total) : [0, 0, 0, 0, 0, 0, 0];
+
     const data = {
-        labels: props.data.week.map((item: any) => item.day),
+        labels: label,
         datasets: [
             {
-                data: props.data.week.map((item: any) => item.total)
+                data: total 
             }
         ]
     };

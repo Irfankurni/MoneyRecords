@@ -8,7 +8,14 @@ export const SplashScreen = ({navigation}: RootStackScreenProps<'Splash'>) => {
 
     useEffect(() => {
       setTimeout(() => {
+        if(checkData !== null || checkData !== undefined) {
+            navigation.replace('HomeTab', {
+                screen: 'Home',
+                params: undefined
+            })
+        } else {
             navigation.replace('Login');
+        }
       }, 3000);
     }, [])
 

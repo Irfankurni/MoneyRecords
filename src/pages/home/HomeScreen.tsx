@@ -15,7 +15,7 @@ type Props = {}
 
 const HomeScreen = ({ route }: HomeTabScreenProps<'Home'>) => {
     const [loading, setLoading] = useState(true);
-    const [refresh, setRefresh] = useState(false)
+    const [refresh, setRefresh] = useState(false);
     const [user, setUser] = useState({
         firstName: '',
         lastName: ''

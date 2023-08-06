@@ -1,35 +1,97 @@
-import { StyleSheet, View } from 'react-native'
-import React, { useState } from 'react'
-import { Dialog, Text, Button } from 'react-native-paper'
+import { FlatList, StyleSheet, View } from 'react-native'
+import React, { useEffect, useState } from 'react'
 import CardInOut from '../../components/CardInOut'
 import { currencyFormat } from '../../common/currency-format'
 import { mainStyle } from '../../styles/styles'
 import { HomeTabScreenProps } from '../../navigation/types'
+import { deleteHistory, getDataByUser } from '../../services/history.service'
+import DeleteDialog from '../../components/DeleteDialog'
+import LoadingIndicator from '../../components/LoadingIndicator'
 
 type Props = {}
 
 const OutcomeScreen = ({ navigation }: HomeTabScreenProps<'Income'>) => {
-  const date: Date = new Date;
-
   const [visible, setVisible] = useState(false);
+  const [loading, setLoading] = useState(true);
+  const [refresh, setRefresh] = useState(false);
+  const [idOutcome, setIdOutcome] = useState("");
 
   const hideDialog = () => setVisible(false);
-  const showDialog = () => setVisible(true);
+  const showDialog = (id: string) => {
+    setVisible(true);
+    setIdOutcome(id);
+  };
+  const [data, setData] = useState([
+    {
+      id: "",
+      type: "",
+      date: "",
+      total: 0,
+      details: [
+        {
+          name: "",
+          price: 0
+        },
+      ]
+    },
+  ]);
+
+  useEffect(() => {
+    getData()
+  }, [])
+
+  useEffect(() => {
+    if (refresh) {
+      getData();
+    }
+  }, [refresh])
+
+  const getData = () => {
+    getDataByUser('Pengeluaran').then(res => {
+      setData(res);
+      setLoading(false);
+    });
+    setRefresh(false);
+  }
+
+  const deleteData = () => {
+    setLoading(true);
+    deleteHistory(idOutcome).then(() => {
+      setVisible(!visible);
+      setLoading(!loading);
+      onRefresh();
+    });
+  }
+
+  const onRefresh = () => {
+    setRefresh(true)
+  }
+
+  const renderItem = ({ item }: any) => {
+    return (
+      <CardInOut date={new Date(item.date).toDateString()} total={currencyFormat(item.total)} type={item.type} deleteAction={() => showDialog(item.id)} />
+    )
+  }
+
 
   return (
     <View style={mainStyle.mainContainer}>
-      <CardInOut date={date.toDateString()} total={currencyFormat(50000)} type='Pengeluaran' detailAction={() => navigation.navigate('Detail', {id: 'id'})} deleteAction={showDialog} />
-      <CardInOut date={date.toDateString()} total={currencyFormat(50000)} type='Pengeluaran' deleteAction={showDialog} />
-      <CardInOut date={date.toDateString()} total={currencyFormat(50000)} type='Pengeluaran' deleteAction={showDialog} />
-      <Dialog visible={visible} onDismiss={hideDialog}>
-        <Dialog.Content>
-          <Text variant="bodyMedium">Are you want to delete this item?</Text>
-        </Dialog.Content>
-        <Dialog.Actions>
-          <Button onPress={hideDialog}>Cancel</Button>
-          <Button onPress={() => console.log('Ok')}>Ok</Button>
-        </Dialog.Actions>
-      </Dialog>
+      {loading ?
+        <View style={{ alignItems: 'center', justifyContent: 'center', flex: 1 }}>
+          <LoadingIndicator />
+        </View> :
+        <View>
+          <FlatList
+            data={data}
+            renderItem={renderItem}
+            showsVerticalScrollIndicator={false}
+            // keyExtractor={data => data.id}
+            onRefresh={onRefresh}
+            refreshing={refresh}
+          />
+        </View>
+      }
+      <DeleteDialog visible={visible} onDismiss={hideDialog} onSubmit={deleteData} />
     </View>
   )
 }

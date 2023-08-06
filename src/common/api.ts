@@ -18,7 +18,7 @@ async function putApi(url: string, data: any) {
 }
 
 async function deleteApi(url: string) {
-    return axios.delete(url, { method: 'DELETE' }).then(res => res.data)
+    return axios.delete(url, { method: 'DELETE' }).then(res => res)
 }
 
 export { getApi, getByIdApi, postApi, putApi, deleteApi }

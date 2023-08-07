@@ -1,19 +1,28 @@
 import { Image, Pressable, StyleSheet, Text, View } from 'react-native'
-import React from 'react'
+import React, { useState } from 'react'
 import { mainStyle } from '../../styles/styles'
 import Input from '../../components/Input'
 import { Button } from 'react-native-paper'
 import { RootStackScreenProps } from '../../navigation/types'
+import FocusAwareStatusBar from '../../components/FocusAwareStatusBar'
+import { register, saveData } from '../../services/auth.service'
 
 const RegisterScreen = ({ navigation }: RootStackScreenProps<'Register'>) => {
+    const [loading, setLoading] = useState(false);
+    const [disabled, setDisabled] = useState(false);
+    const [body, setBody] = useState({
+        fullName: "",
+        email: "",
+        password: ""
+    })
     const onChangeName = (text: string) => {
-        console.log(text)
+        setBody({...body, fullName: text})
     }
     const onChangeEmail = (text: string) => {
-        console.log(text)
+        setBody({...body, email: text})
     }
     const onChangePassword = (text: string) => {
-        console.log(text)
+        setBody({...body, password: text})
     }
     const navigateLogin = () => {
         navigation.pop();
@@ -25,8 +34,23 @@ const RegisterScreen = ({ navigation }: RootStackScreenProps<'Register'>) => {
         });
     }
 
+    const onSubmit = () => {
+        console.log(body);
+        setLoading(true);
+        setDisabled(true);
+        register(body).then(res => {
+            saveData(res);
+            navigateHome();
+        }).catch(err => {
+            console.log(err)
+            setLoading(false);
+            setDisabled(false);
+        })
+    }
+
     return (
         <View style={[mainStyle.mainContainer, styles.container]}>
+            <FocusAwareStatusBar barStyle="dark-content" backgroundColor="#F2F2F2" />
             <Image source={require('../../../assets/bg.png')} style={{ width: 110, height: 110, marginBottom: 77 }} />
             <View>
                 <Input
@@ -42,12 +66,12 @@ const RegisterScreen = ({ navigation }: RootStackScreenProps<'Register'>) => {
                     secureTextEntry={true} />
             </View>
             <Button mode="contained-tonal"
-                // loading={loading}
-                // disabled={disabled}
+                loading={loading}
+                disabled={disabled}
                 style={[mainStyle.button, { width: 150 }]}
                 contentStyle={{ padding: 8 }}
                 labelStyle={mainStyle.buttonLabel}
-                onPress={navigateHome}>
+                onPress={onSubmit}>
                 Register
             </Button>
             <View style={styles.footer}>

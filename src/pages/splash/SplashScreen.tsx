@@ -2,30 +2,28 @@ import { useEffect } from "react"
 import { Image, StyleSheet, View } from "react-native"
 import { RootStackScreenProps } from "../../navigation/types";
 import { getData } from "../../services/auth.service";
+import { getAnalysis } from "../../services/history.service";
+import FocusAwareStatusBar from "../../components/FocusAwareStatusBar";
 
 
 export const SplashScreen = ({navigation}: RootStackScreenProps<'Splash'>) => {
 
     useEffect(() => {
       setTimeout(() => {
-        if(checkData !== null || checkData !== undefined) {
+        getAnalysis().then(res => {
             navigation.replace('HomeTab', {
                 screen: 'Home',
                 params: undefined
-            })
-        } else {
+            });
+        }).catch(error => {
             navigation.replace('Login');
-        }
+        });
       }, 3000);
-    }, [])
-
-    const checkData = async () => {
-        const data = await getData();
-        return data;
-    }    
+    }, [])  
     
     return (
         <View style={styles.container}>
+            <FocusAwareStatusBar barStyle="dark-content" backgroundColor="#F2F2F2" />
             <Image source={require('../../../assets/bg.png')} style={{ width: 110, height: 110 }} />
         </View>
     )

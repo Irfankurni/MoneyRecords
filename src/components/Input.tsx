@@ -20,16 +20,11 @@ const Input = (props: Props) => {
             <TextInput
                 mode='outlined'
                 style={[mainStyle.input]}
-                placeholder={props.placeholder}
                 placeholderTextColor={'#F1F0F2'}
-                secureTextEntry={props.secureTextEntry}
-                onChangeText={props.onChangeText}
-                keyboardType={props.keyboardType}
-                defaultValue={props.defaultValue}
-                value={props.value}
                 outlineStyle={{ borderRadius: 28, borderColor: '#767AE7' }}
-                onSubmitEditing={props.onSubmitEditing}
-                textColor='#F2F2F2' />
+                textColor='#F2F2F2'
+                {...props}
+                 />
         </View>
     )
 }

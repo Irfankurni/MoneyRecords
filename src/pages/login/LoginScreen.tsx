@@ -5,6 +5,7 @@ import Input from '../../components/Input'
 import { Button } from 'react-native-paper'
 import { RootStackScreenProps } from '../../navigation/types'
 import { loginPost, saveData } from '../../services/auth.service'
+import FocusAwareStatusBar from '../../components/FocusAwareStatusBar'
 
 
 const LoginScreen = ({ navigation }: RootStackScreenProps<'Login'>) => {
@@ -50,6 +51,7 @@ const LoginScreen = ({ navigation }: RootStackScreenProps<'Login'>) => {
 
     return (
         <View style={[mainStyle.mainContainer, styles.container]}>
+            <FocusAwareStatusBar barStyle="dark-content" backgroundColor="#F2F2F2" />
             <Image source={require('../../../assets/bg.png')} style={{ width: 110, height: 110, marginBottom: 77 }} />
             <View>
                 <Input

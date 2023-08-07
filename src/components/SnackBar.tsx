@@ -15,21 +15,16 @@ const SnackBar = (props: Props) => {
   const onDismissSnackBar = () => setVisible(false);
 
   return (
-    <View style={styles.container}>
-      <Button onPress={onToggleSnackBar}>{visible ? 'Hide' : 'Show'}</Button>
       <Snackbar
         visible={visible}
         onDismiss={onDismissSnackBar}
         duration={3000}
         action={{
-          label: 'Undo',
-          onPress: () => {
-            // Do something
-          },
+          label: 'Dismiss',
+          onPress: onDismissSnackBar,
         }}>
         {props.message}
       </Snackbar>
-    </View>
   );
 };
 

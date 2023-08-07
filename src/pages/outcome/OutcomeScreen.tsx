@@ -7,10 +7,11 @@ import { HomeTabScreenProps } from '../../navigation/types'
 import { deleteHistory, getDataByUser } from '../../services/history.service'
 import DeleteDialog from '../../components/DeleteDialog'
 import LoadingIndicator from '../../components/LoadingIndicator'
+import FocusAwareStatusBar from '../../components/FocusAwareStatusBar'
 
 type Props = {}
 
-const OutcomeScreen = ({ navigation }: HomeTabScreenProps<'Income'>) => {
+const OutcomeScreen = ({ navigation }: HomeTabScreenProps<'Outcome'>) => {
   const [visible, setVisible] = useState(false);
   const [loading, setLoading] = useState(true);
   const [refresh, setRefresh] = useState(false);
@@ -76,6 +77,7 @@ const OutcomeScreen = ({ navigation }: HomeTabScreenProps<'Income'>) => {
 
   return (
     <View style={mainStyle.mainContainer}>
+      <FocusAwareStatusBar barStyle="dark-content" backgroundColor="#767AE7" />
       {loading ?
         <View style={{ alignItems: 'center', justifyContent: 'center', flex: 1 }}>
           <LoadingIndicator />

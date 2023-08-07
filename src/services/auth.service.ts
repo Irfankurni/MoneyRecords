@@ -2,18 +2,21 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { BASE_URL } from '../common/base';
 import { postLogin } from '../common/api-login';
 import { postApi } from '../common/api';
-import axios from '../interceptor/custom-interceptor-login';
 
 const loginPost = (body: any) => {
     return postApi(BASE_URL + '/auth/authenticate', body)
 }
 
 const register = (body: any) => {
-    return postApi(`${BASE_URL}/auth/register`, body);
+    return postLogin(`${BASE_URL}/auth/register`, body);
 }
 
 const refreshToken = async (body?: any) => {
     return postApi(`${BASE_URL}/auth/refresh-token`, body);
+}
+
+const logout = async (body?: any) => {
+    return postApi(`${BASE_URL}/auth/logout`, body);
 }
 
 const saveData = async (data: any) => {
@@ -27,7 +30,7 @@ const saveData = async (data: any) => {
 
 const getData = async () => {
     const data = await AsyncStorage.getItem('data')
-    if (data) {
+    if (data !== null) {
         return JSON.parse(data)
     }
     return null
@@ -49,4 +52,4 @@ const clearData = async () => {
     return await AsyncStorage.clear();
 }
 
-export { loginPost, register, refreshToken, saveData, getData, getToken, getRefreshToken, getId, clearData }
+export { loginPost, register, refreshToken, logout, saveData, getData, getToken, getRefreshToken, getId, clearData }

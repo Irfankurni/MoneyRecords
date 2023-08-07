@@ -8,6 +8,7 @@ import { Button, Dialog, Text } from 'react-native-paper'
 import DeleteDialog from '../../components/DeleteDialog'
 import LoadingIndicator from '../../components/LoadingIndicator'
 import { getDataByUser, deleteHistory } from '../../services/history.service'
+import FocusAwareStatusBar from '../../components/FocusAwareStatusBar'
 
 type Props = {}
 
@@ -77,6 +78,7 @@ const IncomeScreen = ({ route }: HomeTabScreenProps<'Income'>) => {
 
   return (
     <View style={mainStyle.mainContainer}>
+      <FocusAwareStatusBar barStyle="dark-content" backgroundColor="#767AE7" />
       {loading ?
         <View style={{ alignItems: 'center', justifyContent: 'center', flex: 1 }}>
           <LoadingIndicator />

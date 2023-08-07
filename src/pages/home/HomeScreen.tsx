@@ -6,19 +6,19 @@ import TodayOutcome from './components/TodayOutcome'
 import LoadingIndicator from '../../components/LoadingIndicator'
 import { HomeTabScreenProps } from '../../navigation/types'
 import { currencyFormat } from '../../common/currency-format'
-import { getData, getId } from '../../services/auth.service'
+import { clearData, getData, getId, logout } from '../../services/auth.service'
 import { getAnalysis } from '../../services/history.service'
 import LineCharts from './components/LineCharts'
 import PieCharts from './components/PieCharts'
+import FocusAwareStatusBar from '../../components/FocusAwareStatusBar'
 
 type Props = {}
 
-const HomeScreen = ({ route }: HomeTabScreenProps<'Home'>) => {
+const HomeScreen = ({ route, navigation }: HomeTabScreenProps<'Home'>) => {
     const [loading, setLoading] = useState(true);
     const [refresh, setRefresh] = useState(false);
     const [user, setUser] = useState({
-        firstName: '',
-        lastName: ''
+        fullName: ''
     });
     const [analysis, setAnalysis] = useState({
         today: 0,
@@ -59,8 +59,20 @@ const HomeScreen = ({ route }: HomeTabScreenProps<'Home'>) => {
         return Math.floor(data);
     }
 
+    const doLogout = async () => {
+        await logout().then(res => {
+            clearData();
+            navigation.navigate('Login');
+        });
+    }
+
+    const goToForm = () => {
+        navigation.navigate('Add');
+    }
+
     return (
         <View style={mainStyle.mainContainer}>
+            <FocusAwareStatusBar barStyle="dark-content" backgroundColor="#F2F2F2" />
             {loading ?
                 <View style={{ alignItems: 'center', justifyContent: 'center', flex: 1 }}>
                     <LoadingIndicator />
@@ -75,13 +87,13 @@ const HomeScreen = ({ route }: HomeTabScreenProps<'Home'>) => {
                             <View style={styleSheet.profileContainer}>
                                 <View style={{ flexDirection: 'row' }}>
                                     <Avatar.Image source={require('../../../assets/profile.png')} style={mainStyle.profileImage} />
-                                    <Text style={mainStyle.profileName}>Hi, {user.firstName} {user.lastName}</Text>
+                                    <Text style={mainStyle.profileName}>Hi, {user.fullName}</Text>
                                 </View>
                                 <Tooltip title="Logout">
                                     <IconButton
                                         icon='power'
                                         size={25}
-                                        onPress={() => console.log('Logout')}
+                                        onPress={doLogout}
                                         iconColor='black' />
                                 </Tooltip>
                                 {/* <Icon name='power-settings-new' size={25} /> */}
@@ -98,7 +110,7 @@ const HomeScreen = ({ route }: HomeTabScreenProps<'Home'>) => {
                         style={mainStyle.fab}
                         theme={{ colors: { primaryContainer: '#767AE7' } }}
                         rippleColor={'#767AE7'}
-                        onPress={() => console.log('Pressed')} />
+                        onPress={goToForm} />
                 </View>
             }
 
